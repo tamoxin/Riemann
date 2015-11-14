@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Riemann</string>
+    <string name="algFunction">Algebraic Function</string>
+    <string name="to">To</string>
+    <string name="from">From</string>
+    <string name="interval">Interval</string>
+    <string name="solve">Solve</string>
+    <string name="answer">Answer</string>
+    <string name="default_error">Uh oh! There was an error.</string>
+    <string name="flip_range_error">The range to be evaluated was changed automatically.</string>
+    <string name="rectangles">Number of rectangles</string>
+    <string name="integer_power_error">Powers can only be POSITIVE INTEGERS.</string>
+    <string name="non_polynomial_error">Only polynomial expressions are allowed.</string>
+    <string name="all_fields_required_error">All fields are required</string>
+    <string name="too_many_rectangles_error">The number of rectangles was changed to 1000</string>
+    <string-array name="position">
+        <item>Left</item>
+        <item>Right</item>
+        <item>Center</item>
+    </string-array>
+</resources>
