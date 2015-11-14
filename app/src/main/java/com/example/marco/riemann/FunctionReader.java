@@ -15,6 +15,13 @@ public class FunctionReader {
     }
 
     //Methods start here
+
+
+    /**
+     * Gets the the value of every power of x in the original function.
+     *
+     * @return an array with the pows.
+     */
     public int[] getPows() {
         int[] pows;
         String[] aux;
@@ -44,7 +51,6 @@ public class FunctionReader {
         return coeff;
     }
 
-
     /**
      * Gets the coefficient of a algebraical term.
      *
@@ -64,7 +70,9 @@ public class FunctionReader {
 
     /**
      * Sorts the polynomial expression from the highest
-     * to the lowest power.
+     * to the lowest power. This method makes use of an insertion sort
+     * as it is usual for people to use polynomials no longer 10 terms.
+     * Feel free to use the sorting method of your preference.
      */
     public void sortPolynomial() {
 
@@ -102,12 +110,15 @@ public class FunctionReader {
      * @param   terms
      *          The term raised to the Nth power.
      *
-     * @return  The power to which the term is raised.
+     * @return  The power to which the term is raised or 9000 if the power is not integer.
      */
     public int getPow(String terms) {
         if(terms.contains("x")) {
             if (terms.contains("^")) {
                 if(terms.split("\\^")[1].contains("."))
+                    //This error is handled by throwing a Toast saying powers can only be integers.
+                    //Feel free to improve the way to handle the error,
+                    // or even better, feel free to fix this problem.
                     return 9000;
                 return Integer.parseInt(terms.split("\\^")[1]);
             }else {
@@ -135,11 +146,13 @@ public class FunctionReader {
         return parts;
     }
 
-    public void setPolynomial(String str) { this.polynomial = str;}
-
-    public String getPolynomial() {return this.polynomial;}
-
     public void setCoefficients(double[] values) {this.coefficients = values;}
 
+    public void setPolynomial(String str) { this.polynomial = str;}
+
+    //-----------------Just in case------------------//
+    public String getPolynomial() {return this.polynomial;}
+
     public double[] getCoefficients() {return coefficients;}
+    //----------------------------------------------//
 }

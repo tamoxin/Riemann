@@ -22,6 +22,8 @@ public class InsertionSort {
         return getSortedValues();
     }
 
+    //Here is where the magic happens.
+    //ordered = false for decreasing and true for increasing.
     private void sortValues(int values[], boolean ordered) {
         int notSortedValue;
         int positionOfSwappedValue;

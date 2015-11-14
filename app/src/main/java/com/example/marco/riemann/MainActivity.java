@@ -2,8 +2,6 @@ package com.example.marco.riemann;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     TextView answer;
     EditText functionET, fromET, toET, rectanglesET;
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Link variables with UI
+        //UI
         answer = (TextView) findViewById(R.id.answer);
         fromET = (EditText) findViewById(R.id.from);
         toET = (EditText) findViewById(R.id.to);
@@ -44,21 +42,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         functionET = (EditText) findViewById(R.id.algFunction);
     }
 
+    /**
+     * Set the variables needed to solve the problem with data from the UI.
+     * Make sure to call it after validating no errors.
+     */
     public void setValues() {
         rectanglesNo = Integer.parseInt(rectanglesET.getText().toString());
         function = functionET.getText().toString();
         to = Double.parseDouble(toET.getText().toString());
         from = Double.parseDouble(fromET.getText().toString());
-        base = (this.to - this.from)/this.rectanglesNo;
+        base = (this.to - this.from) / this.rectanglesNo;
         height = 0;
     }
 
+    /**
+     * Approximates the solution using a Riemann sum.
+     */
     public void solve() {
         double[] coefficients;
         int[] pows;
         double area = 0;
         double x;
         FunctionReader reader = new FunctionReader(function);
+        functionET.setText(reader.getPolynomial());
 
         pows = reader.getPows();
         coefficients = reader.splitIntoCoefficients();
@@ -83,13 +89,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         area += base * height;
 
-        answer.setText(""+area);
+        answer.setText("" + area);
     }
 
     /**
      * Shows a Toast with an error message.
      *
-     * @param errorId the error identifier
+     * @param errorId the error identifier.
      */
     public void throwError(int errorId) {
         String error;
@@ -121,30 +127,44 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Check if a field in the UI is empty.
+     *
+     * @return true any field has no data.
+     */
     public boolean areFieldsEmpty() {
         return functionET.getText().toString().equals("") || fromET.getText().toString().equals("")
                 || toET.getText().toString().equals("") || rectanglesET.getText().toString().equals("");
     }
 
+    /**
+     * Solves the function when the button is pressed.
+     * First it checks for user errors.
+     *
+     * @param view button view
+     */
     public void onClick(View view) {
 
         //Check for errors
-        if(areFieldsEmpty()) {
+        if (areFieldsEmpty()) {
             throwError(4);
             return;
         }
 
-        if(this.from > this.to)
+        if (this.from > this.to)
             throwError(1);
 
-        if(Integer.parseInt(rectanglesET.getText().toString()) > 1000)
+        //Feel free to play with this value but take into account that double is only 64 bits.
+        if (Integer.parseInt(rectanglesET.getText().toString()) > 1000)
             throwError(5);
         ////////////////////////
 
         setValues();
         solve();
     }
+
     @Override
+    //Handles the position in the spinner.
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // An item was selected. You can retrieve the position of the selected item using
         //parent.getPositionForView(view)
@@ -152,5 +172,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) { }
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 }
